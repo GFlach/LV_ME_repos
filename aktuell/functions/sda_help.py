@@ -265,22 +265,23 @@ def build_df(data_files, class_labels):
     df_ges = pd.concat([df_ges, df_cn], axis = 1)  
     return(df_ges)
 
-def show_res(df_ges, w):
+def show_res(X, y, w):
+    pmin = min(min(X[:,1]), min(X[:,2]))*1.1
+    pmax = max(max(X[:,1]), max(X[:,2]))*1.1
     colors = ['green', 'red', 'blue', 'yellow', 'magenta', 'lime', 'skyblue', 'orangered', 'cyan', 'aqua']
-    hist_cl = np.unique(df_ges['Klasse'].values)
+    hist_cl = np.unique(y)
     eps = 10**(-6)
     plt.figure(figsize=(7,7))
     for hist_cl, color in zip(hist_cl, colors):
-        df_h = df_ges[df_ges.Klasse == hist_cl].values
-        y = df_h[:,0:2]
-        plt.scatter(y[:,0], y[:,1], color=color, marker='o', label='Klasse ' + str(hist_cl))
-    p1 = w[1]/(w[2] + eps) -w[0]/(w[2] + eps)
-    p2 = -w[1]/(w[2] + eps)*5 -w[0]/(w[2] + eps)
-    plt.plot([-1, 5], [p1, p2])
+        X1 = X[np.array([index for index, val in enumerate(y) if val == hist_cl])]
+        plt.scatter(X1[:,1], X1[:,2], color=color, marker='o', label='Klasse ' + str(hist_cl))
+    p1 = -w[1]/(w[2] + eps)*pmin -w[0]/(w[2] + eps)
+    p2 = -w[1]/(w[2] + eps)*pmax -w[0]/(w[2] + eps)
+    plt.plot([pmin, pmax], [p1, p2])
     plt.xlabel('x1')
     plt.ylabel('x2')
     plt.legend(loc='upper left')
-    plt.axis([-1, 5, -1, 5])
+    plt.axis([pmin, pmax, pmin, pmax])
     plt.grid()
     plt.show()
     
@@ -302,4 +303,15 @@ def show_res1(df_ges, w):
     plt.axis([0, 120, 0, 120])
     plt.grid()
     plt.show()
- 
+
+def perceptron(X, y, w, alpha, n_iter):
+    for i in range(0, n_iter):
+        err = 0
+        for d in range(0, len(X)):
+            e = np.sign(np.dot(X[d], w)) - y[d]
+            if e != 0:
+                err = err + 1
+                w = w + 2 * alpha * X[d] * y[d]
+        if err == 0:
+            break
+    return(i, w)    
