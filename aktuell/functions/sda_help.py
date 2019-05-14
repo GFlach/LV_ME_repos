@@ -272,6 +272,7 @@ def show_res(X, y, w):
     colors = ['green', 'red', 'blue', 'yellow', 'magenta', 'lime', 'skyblue', 'orangered', 'cyan', 'aqua']
     hist_cl = np.unique(y)
     eps = 10**(-6)
+    plt.gcf().clear()
     plt.figure(figsize=(7,7))
     for hist_cl, color in zip(hist_cl, colors):
         X1 = X[np.array([index for index, val in enumerate(y) if val == hist_cl])]
