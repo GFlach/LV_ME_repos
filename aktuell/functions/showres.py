@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def plot_decision_regions(X, y, classifier, resolution=0.1):
-
+    print(classifier.w_)
     # setup marker generator and color map
     markers = ('s', 'x', 'o', '^', 'v')
     colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')

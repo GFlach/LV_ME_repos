@@ -77,7 +77,7 @@ class Perceptron(object):
     
     def show_tf(self, X, y, tf_iter = 1):
         plt.clf()
-        w = [0.0, 0.0, 0.0]
+        w = [0.0, -2.0, 1.0]
         plt.axis([-10, 10, -10, 10])
         colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
         for idx, cl in enumerate(np.unique(y)):
@@ -96,7 +96,7 @@ class Perceptron(object):
         plt.show()
         
 #mp = Perceptron(eta=1, n_iter=1)
-#X = np.array([-1, -1, 2, 1, 3, 1, 1, 3, 2, 3, 3, 3]).reshape(-1,2)
+#X = np.array([1, 1, 2, 1, 3, 1, 1, 3, 2, 3, 3, 3]).reshape(-1,2)
 #y = np.array([1, 1, 1, -1, -1, -1])
 
 #mp.show_tf(X, y, tf_iter = 4)
