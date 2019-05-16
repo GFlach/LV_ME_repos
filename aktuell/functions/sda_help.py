@@ -332,7 +332,8 @@ def plot_decision_regions(X, y, w, resolution=0.1):
     xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution),
                            np.arange(x2_min, x2_max, resolution))
     #Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
-    Z = np.dot(w[1:,],np.array([xx1.ravel(), xx2.ravel()]))
+    #Z = np.dot( w[1:,], np.array([xx1.ravel(), xx2.ravel()]))
+    Z = np.where(np.dot(w[1:,], np.array([xx1.ravel(), xx2.ravel()])) + w[0]>= 0.0, 1, -1)
     Z = Z.reshape(xx1.shape)
     plt.contourf(xx1, xx2, Z, alpha=0.3, cmap=cmap)
     plt.xlim(xx1.min(), xx1.max())
