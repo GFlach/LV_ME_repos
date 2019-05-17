@@ -319,7 +319,7 @@ def perceptron(X, y, w, alpha, n_iter):
     return(i, w)    
 
 def plot_decision_regions(X, y, w, resolution=0.1):
-
+    plt.figure(figsize=(7,7))
     # setup marker generator and color map
     markers = ('s', 'x', 'o', '^', 'v')
     colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
@@ -331,8 +331,6 @@ def plot_decision_regions(X, y, w, resolution=0.1):
 
     xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution),
                            np.arange(x2_min, x2_max, resolution))
-    #Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
-    #Z = np.dot( w[1:,], np.array([xx1.ravel(), xx2.ravel()]))
     Z = np.where(np.dot(w[1:,], np.array([xx1.ravel(), xx2.ravel()])) + w[0]>= 0.0, 1, -1)
     Z = Z.reshape(xx1.shape)
     plt.contourf(xx1, xx2, Z, alpha=0.3, cmap=cmap)
@@ -348,3 +346,21 @@ def plot_decision_regions(X, y, w, resolution=0.1):
                     marker=markers[idx], 
                     label=cl, 
                     edgecolor='black')
+        
+def generate_train(df, anz, ka, kr):
+    index = np.random.choice(1000, anz)
+    X1 = df[df.Klasse == ka].iloc[index,:2].values
+    y1 = np.ones(anz)
+    XR = np.array([])
+    yr = np.array([])
+    for k in kr:
+        index = np.random.choice(1000, anz)
+        X2 = df[df.Klasse == k].iloc[index,:2].values
+        y2 = -1 * np.ones(anz)
+        XR = np.append(XR, X2).reshape(-1,2)
+        yr = np.append(yr, y2)
+    X = np.append(X1, XR).reshape(-1,2)
+    X = np.insert(X, 0, values=1, axis=1)
+    y = np.append(y1, yr)
+    return (X, y)
+
