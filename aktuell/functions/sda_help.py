@@ -348,13 +348,13 @@ def plot_decision_regions(X, y, w, resolution=0.1):
                     edgecolor='black')
         
 def generate_train(df, anz, ka, kr):
-    index = np.random.choice(1000, anz)
+    index = np.random.choice(len(df[df.Klasse == ka]), anz)
     X1 = df[df.Klasse == ka].iloc[index,:2].values
     y1 = np.ones(anz)
     XR = np.array([])
     yr = np.array([])
     for k in kr:
-        index = np.random.choice(1000, anz)
+        index = np.random.choice(len(df[df.Klasse == k]), anz)
         X2 = df[df.Klasse == k].iloc[index,:2].values
         y2 = -1 * np.ones(anz)
         XR = np.append(XR, X2).reshape(-1,2)
