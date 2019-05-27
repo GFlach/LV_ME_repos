@@ -364,3 +364,15 @@ def generate_train(df, anz, ka, kr):
     y = np.append(y1, yr)
     return (X, y)
 
+def calculate_w(X, y, w0, eta, n_iter):
+    cost = np.zeros(n_iter)
+    w = w0
+    for i in (np.arange(0, n_iter)):
+        w = w + 2 * eta * np.dot((y - np.dot(X, w.T)),X)
+        cost[i] = ((y - np.dot(X, w.T))**2).sum() / 2.0
+    plt.plot(cost, marker = 'o')
+    plt.grid()
+    plt.xlabel('Iterationen')
+    plt.ylabel('Kosten')
+    plt.show()
+    return w
